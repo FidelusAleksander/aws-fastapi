@@ -1,0 +1,57 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: EKS-fidel-cluster
+  region: eu-west-1
+
+nodeGroups:
+  - name: ng-1
+    instanceType: t2.micro
+    desiredCapacity: 3
+    ssh: # use existing EC2 key
+      publicKeyName: ec2-kp-alek
+  - name: scale-west1c
+    instanceType: t2.micro
+    desiredCapacity: 1
+    maxSize: 10
+    availabilityZones: ["eu-west-1c"]
+    iam:
+      withAddonPolicies:
+        autoScaler: true
+    labels:
+      nodegroup-type: stateful-west1a
+      instance-type: onDemand
+    ssh: # use existing EC2 key
+      publicKeyName: ec2-kp-alek
+  - name: scale-east1a
+    instanceType: t2.micro
+    desiredCapacity: 1
+    maxSize: 10
+    availabilityZones: ["eu-west-1a"]
+    iam:
+      withAddonPolicies:
+        autoScaler: true
+    labels:
+      nodegroup-type: stateful-west1b
+      instance-type: onDemand
+    ssh: # use existing EC2 key
+      publicKeyName: ec2-kp-alek
+  - name: scale-spot
+    desiredCapacity: 1
+    maxSize: 10
+    instancesDistribution:
+      instanceTypes: ["t2.micro", "t3.micro"]
+      onDemandBaseCapacity: 0
+      onDemandPercentageAboveBaseCapacity: 0
+    availabilityZones: ["eu-west-1c", "eu-west-1a"]
+    iam:
+      withAddonPolicies:
+        autoScaler: true
+    labels:
+      nodegroup-type: stateless-workload
+      instance-type: spot
+    ssh:
+      publicKeyName: ec2-kp-alek
+
+availabilityZones: ["eu-west-1c", "eu-west-1a"]
