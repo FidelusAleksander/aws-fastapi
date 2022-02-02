@@ -4,10 +4,6 @@ terraform {
       source  = "hashicorp/aws"
       version = "3.26.0"
     }
-    random = {
-      source  = "hashicorp/random"
-      version = "3.0.1"
-    }
   }
   required_version = ">= 1.1.0"
 
@@ -22,12 +18,9 @@ terraform {
 
 
 provider "aws" {
-  region = "us-west-2"
+  region = "eu-west-1"
 }
 
-
-
-resource "random_pet" "sg" {}
 
 resource "aws_instance" "web" {
   ami                    = "ami-830c94e3"
@@ -42,7 +35,7 @@ resource "aws_instance" "web" {
 }
 
 resource "aws_security_group" "web-sg" {
-  name = "${random_pet.sg.id}-sg"
+  name = "fastapi-web-sg"
   ingress {
     from_port   = 8080
     to_port     = 8080
