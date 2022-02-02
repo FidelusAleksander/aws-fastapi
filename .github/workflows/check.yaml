@@ -1,11 +1,10 @@
-name: Main
+name: check
 
 on: push
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python 3.10
