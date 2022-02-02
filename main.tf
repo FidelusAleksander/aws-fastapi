@@ -41,7 +41,6 @@ resource "aws_security_group" "web-sg" {
   name = "fastapi-web-sg"
 
   ingress {
-    name             = "HTTP"
     from_port        = 80
     to_port          = 80
     protocol         = "tcp"
@@ -50,7 +49,6 @@ resource "aws_security_group" "web-sg" {
   }
 
   ingress {
-    name        = "SSH"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
@@ -58,7 +56,6 @@ resource "aws_security_group" "web-sg" {
   }
 
   egress {
-    name        = "All traffic"
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
