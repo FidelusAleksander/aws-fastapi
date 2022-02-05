@@ -1,1 +1,1 @@
-![tests](https://github.com/FidelusAleksander/aws-fastapi/actions/workflows/check.yaml/badge.svg) 
+![Continuous Integration](https://github.com/FidelusAleksander/aws-fastapi/actions/workflows/integration.yaml/badge.svg)
