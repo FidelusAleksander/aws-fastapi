@@ -39,6 +39,9 @@ resource "aws_instance" "web" {
 
 resource "aws_security_group" "web-sg" {
   name = "fastapi-web-sg"
+  tags = {
+    env : var.env_name
+  }
 
   ingress {
     from_port        = 80
