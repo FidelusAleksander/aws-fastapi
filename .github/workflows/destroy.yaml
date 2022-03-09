@@ -25,8 +25,8 @@ jobs:
       - name: Terraform Init
         run: terraform init
 
-      - name: Terraform Validate
-        run: terraform validate -no-color
+      - name: Terraform Plan Destroy
+        run: terraform plan -destroy
 
       - name: Terraform destroy
         run: terraform destroy -auto-approve
