@@ -20,12 +20,20 @@ provider "aws" {
   region = "eu-west-1"
 }
 
+module "iam_ecs" {
+  source       = "./modules/iam/ecs"
+  project_name = var.project_name
+  ecr_arn      = module.ecr.ecr_arn
+}
 #module "instance" {
 #  source = "./modules/instance"
 #}
 
 module "ecs" {
-  source = "./modules/ecs"
+  source                 = "./modules/ecs"
+  project_name           = var.project_name
+  ecr_repository_url     = module.ecr.repository_url
+  ecs_execution_role_arn = module.iam_ecs.ecr_execution_role_arn
 }
 
 module "ecr" {
