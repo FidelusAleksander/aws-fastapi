@@ -20,10 +20,15 @@ provider "aws" {
   region = "eu-west-1"
 }
 
-module "instance" {
-  source = "./modules/instance"
-}
+#module "instance" {
+#  source = "./modules/instance"
+#}
 
 module "ecs" {
   source = "./modules/ecs"
+}
+
+module "ecr" {
+  source = "./modules/ecr"
+  project_name = var.project_name
 }
