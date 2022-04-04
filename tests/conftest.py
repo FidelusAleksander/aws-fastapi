@@ -85,4 +85,3 @@ def s3_files_bucket(s3_client, s3_resource):
 @pytest.fixture()
 def service(s3_files_bucket, s3_client):
     return Service(s3_client=s3_client)
-
