@@ -45,19 +45,14 @@ def localstack(aws_environ):
 
 
 @pytest.fixture(scope="session")
-def s3_client_factory(aws_environ, localstack):
-    return lambda: boto3.client(
+def s3_client(aws_environ, localstack):
+    return boto3.client(
         "s3",
         aws_access_key_id=os.environ["AWS_ACCESS_KEY"],
         aws_secret_access_key=os.environ["AWS_SECRET_ACCESS_KEY"],
         endpoint_url="http://localhost:4566",
         region_name=os.environ["AWS_REGION"],
     )
-
-
-@pytest.fixture(scope="session")
-def s3_client(s3_client_factory):
-    return s3_client_factory()
 
 
 @pytest.fixture(scope="session")
