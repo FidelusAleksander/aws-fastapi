@@ -32,19 +32,16 @@ def aws_environ():
 
 @pytest.fixture(scope="session")
 def localstack(aws_environ):
-    if os.environ.get("DONT_RUN_DOCKER_FOR_TESTS"):
-        yield
-    else:
-        localstack_id = subprocess.check_output(
-            shlex.split(
-                'docker run --rm -d -e "SERVICES=s3" -p 4566-4599:4566-4599 localstack/localstack:0.13'
-            )
+    localstack_id = subprocess.check_output(
+        shlex.split(
+            'docker run --rm -d -e "SERVICES=s3" -p 4566-4599:4566-4599 localstack/localstack:0.13'
         )
-        localstack_id = localstack_id.decode("utf8").strip()
+    )
+    localstack_id = localstack_id.decode("utf8").strip()
 
-        yield
+    yield
 
-        subprocess.check_output(["docker", "rm", "-f", localstack_id])
+    subprocess.check_output(["docker", "rm", "-f", localstack_id])
 
 
 @pytest.fixture(scope="session")
@@ -88,3 +85,4 @@ def s3_files_bucket(s3_client, s3_resource):
 @pytest.fixture()
 def service(s3_files_bucket, s3_client):
     return Service(s3_client=s3_client)
+
