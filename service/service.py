@@ -1,3 +1,5 @@
+import os
+
 import boto3
 
 
@@ -7,7 +9,7 @@ class Service:
 
     @classmethod
     def from_environ(cls):
-        return cls(s3_client=boto3.Session().client('s3'))
+        return cls(s3_client=boto3.Session().client("s3"))
 
     def list_objects(self):
-        return self._s3_client.list_objects_v2(Bucket="aws-fastapi-bucket")
+        return self._s3_client.list_objects(Bucket=os.environ["S3_BUCKET_NAME"])
