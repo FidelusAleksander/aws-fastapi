@@ -2,6 +2,10 @@ resource "aws_ecs_cluster" "cluster" {
   name = "${var.project_name}-cluster"
 }
 
+data "aws_ecr_repository" "ecr" {
+  name = var.ecr_repository_name
+}
+
 resource "aws_ecs_task_definition" "task_definition" {
   family                   = var.project_name
   requires_compatibilities = ["FARGATE"]
@@ -12,19 +16,16 @@ resource "aws_ecs_task_definition" "task_definition" {
   container_definitions = jsonencode([
     {
       name  = "${var.project_name}-container"
-      image = local.ecr_image
+      image = "${data.aws_ecr_repository.ecr.repository_url}:latest"
   }])
 }
 
-locals {
-  ecr_image = "${var.ecr_repository_url}:${var.image_tag}"
+data "aws_vpc" "vpc" {
+  id = var.vpc_id
 }
 
-data "aws_vpc" "main" {
-  id = "vpc-54c9792d"
-}
 data "aws_subnet_ids" "subnet_ids" {
-  vpc_id = data.aws_vpc.main.id
+  vpc_id = data.aws_vpc.vpc.id
 }
 
 resource "aws_ecs_service" "service" {
@@ -43,7 +44,7 @@ resource "aws_ecs_service" "service" {
 
 resource "aws_security_group" "ecs_task_sg" {
   name   = "${var.project_name}-ecs-task-sg"
-  vpc_id = data.aws_vpc.main.id
+  vpc_id = data.aws_vpc.vpc.id
 
   dynamic "ingress" {
     for_each = [443, 80]

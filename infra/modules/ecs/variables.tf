@@ -1,11 +1,7 @@
 variable "project_name" {}
-variable "ecr_repository_url" {}
 variable "ecs_execution_role_arn" {}
-
-variable "image_tag" {
-  type    = string
-  default = "aws-fastapi-image"
-}
+variable "ecr_repository_name" {}
+variable "vpc_id" {}
 
 variable "fargate_cpu" {
   type        = number
