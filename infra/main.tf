@@ -21,9 +21,9 @@ provider "aws" {
 }
 
 module "iam_ecs" {
-  source       = "./modules/iam/ecs"
-  project_name = var.project_name
-  ecr_arn      = module.ecr.ecr_arn
+  source              = "./modules/iam/ecs"
+  project_name        = var.project_name
+  ecr_repository_name = var.ecr_repository_name
 }
 #module "instance" {
 #  source = "./modules/instance"
@@ -32,11 +32,7 @@ module "iam_ecs" {
 module "ecs" {
   source                 = "./modules/ecs"
   project_name           = var.project_name
-  ecr_repository_url     = module.ecr.repository_url
+  ecr_repository_name    = var.ecr_repository_name
+  vpc_id                 = var.vpc_id
   ecs_execution_role_arn = module.iam_ecs.ecr_execution_role_arn
-}
-
-module "ecr" {
-  source       = "./modules/ecr"
-  project_name = var.project_name
 }

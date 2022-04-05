@@ -1,3 +1,7 @@
+data "aws_ecr_repository" "ecr" {
+  name = var.ecr_repository_name
+}
+
 data "aws_iam_policy_document" "ecs_assume_policy" {
   statement {
     actions = ["sts:AssumeRole"]
@@ -17,7 +21,7 @@ data "aws_iam_policy_document" "ecr_image_access_policy" {
       "ecr:BatchGetImage"
     ]
 
-    resources = [var.ecr_arn]
+    resources = [data.aws_ecr_repository.ecr.arn]
   }
 }
 
