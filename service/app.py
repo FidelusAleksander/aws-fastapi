@@ -1,7 +1,7 @@
 import os
 
 from fastapi import FastAPI
-from service.service import Service
+from service import Service
 
 app = FastAPI()
 service = Service.from_environ()
