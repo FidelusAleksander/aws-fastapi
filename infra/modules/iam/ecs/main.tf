@@ -41,7 +41,7 @@ data "aws_iam_policy_document" "s3_access_policy" {
       "*"
     ]
 
-    resources = ["arn:aws:s3:::${var.s3_bucket_name}/*"]
+    resources = ["arn:aws:s3:::*"]
   }
 }
 

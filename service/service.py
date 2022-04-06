@@ -1,5 +1,5 @@
 import os
-
+from typing import Dict
 import boto3
 
 
@@ -13,3 +13,10 @@ class Service:
 
     def list_objects(self):
         return self._s3_client.list_objects(Bucket=os.environ["S3_BUCKET_NAME"])
+
+    def generate_presigned_url(self, key, expires_in: int = 300):
+        return self._s3_client.generate_presigned_url(
+            ClientMethod="get_object",
+            Params={"Bucket": os.environ["S3_BUCKET_NAME"], "Key": key},
+            ExpiresIn=expires_in,
+        )

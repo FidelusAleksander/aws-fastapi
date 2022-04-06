@@ -7,8 +7,10 @@ from mock import Mock
 from service.service import Service
 import boto3
 
+TEST_DATA_DIR = os.path.join(os.path.dirname(__file__), "test_data")
 
-@pytest.fixture(scope="session", autouse=True)
+
+@pytest.fixture(scope="session", autouse=False)
 def aws_environ():
     default_values = {
         "AWS_REGION": "eu-west-1",
@@ -75,6 +77,18 @@ def s3_files_bucket(s3_client, s3_resource):
     )
     bucket.wait_until_exists()
     return bucket
+
+
+@pytest.fixture(scope="session")
+def test_data(s3_files_bucket, s3_client):
+    filenames = os.listdir(TEST_DATA_DIR)
+    for filename in filenames:
+        s3_client.upload_file(
+            os.path.join(TEST_DATA_DIR, filename),
+            os.environ["S3_BUCKET_NAME"],
+            filename,
+        )
+    return filenames
 
 
 @pytest.fixture()
