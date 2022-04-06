@@ -38,7 +38,7 @@ data "aws_iam_policy_document" "authorize_cluster_to_ecr" {
 data "aws_iam_policy_document" "s3_access_policy" {
   statement {
     actions = [
-      "s3:*"
+      "*"
     ]
 
     resources = ["arn:aws:s3:::${var.s3_bucket_name}/*"]
