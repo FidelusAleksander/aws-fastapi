@@ -45,13 +45,28 @@ data "aws_iam_policy_document" "s3_access_policy" {
   }
 }
 
-resource "aws_iam_role" "ecs_tasks_execution_role" {
-  name               = "${var.project_name}-ecs-task-execution-role"
-  assume_role_policy = data.aws_iam_policy_document.ecs_assume_policy.json
+data "aws_region" "current" {
 }
 
-resource "aws_iam_role" "ecs_tasks_container_role" {
-  name               = "${var.project_name}-ecs-task-container-role"
+data "aws_caller_identity" "current" {
+}
+
+data "aws_iam_policy_document" "cloudwatch_logs_access" {
+  statement {
+    actions = [
+      "logs:CreateLogGroup",
+      "logs:CreateLogStream",
+      "logs:PutLogEvents",
+    ]
+    resources = [
+      "arn:aws:logs:*"
+    ]
+  }
+}
+
+# Execution role
+resource "aws_iam_role" "ecs_tasks_execution_role" {
+  name               = "${var.project_name}-ecs-task-execution-role"
   assume_role_policy = data.aws_iam_policy_document.ecs_assume_policy.json
 }
 
@@ -63,6 +78,17 @@ resource "aws_iam_role_policy" "authorize_cluster_to_ecr" {
 resource "aws_iam_role_policy" "ecr_image_access_policy" {
   role   = aws_iam_role.ecs_tasks_execution_role.id
   policy = data.aws_iam_policy_document.ecr_image_access_policy.json
+}
+
+resource "aws_iam_role_policy" "cloudwatch_logs_access" {
+  role   = aws_iam_role.ecs_tasks_execution_role.id
+  policy = data.aws_iam_policy_document.cloudwatch_logs_access.json
+}
+
+# Task role
+resource "aws_iam_role" "ecs_tasks_container_role" {
+  name               = "${var.project_name}-ecs-task-container-role"
+  assume_role_policy = data.aws_iam_policy_document.ecs_assume_policy.json
 }
 
 resource "aws_iam_role_policy" "s3_access_policy" {
