@@ -36,3 +36,8 @@ module "ecs" {
   vpc_id                 = var.vpc_id
   ecs_execution_role_arn = module.iam_ecs.ecr_execution_role_arn
 }
+
+module "dynamo" {
+  source       = "./modules/dynamo"
+  project_name = var.project_name
+}
