@@ -1,3 +1,8 @@
+data "aws_region" "current" {
+}
+locals {
+  container_log_group_name = "${var.project_name}-container-logs"
+}
 resource "aws_ecs_cluster" "cluster" {
   name = "${var.project_name}-cluster"
 }
@@ -17,6 +22,17 @@ resource "aws_ecs_task_definition" "task_definition" {
     {
       name  = "${var.project_name}-container"
       image = "${data.aws_ecr_repository.ecr.repository_url}:latest"
+      environment = [
+        { name = "S3_BUCKET_NAME", value = var.s3_bucket_name }
+      ],
+      logConfiguration = {
+        logDriver = "awslogs"
+        options = {
+          awslogs-group         = local.container_log_group_name
+          awslogs-region        = data.aws_region.current.id
+          awslogs-stream-prefix = var.project_name
+        }
+      }
   }])
 }
 
@@ -62,4 +78,8 @@ resource "aws_security_group" "ecs_task_sg" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+}
+
+resource "aws_cloudwatch_log_group" "container_log_group" {
+  name = local.container_log_group_name
 }

@@ -24,6 +24,7 @@ module "iam_ecs" {
   source              = "./modules/iam/ecs"
   project_name        = var.project_name
   ecr_repository_name = var.ecr_repository_name
+  s3_bucket_name      = var.s3_bucket_name
 }
 #module "instance" {
 #  source = "./modules/instance"
@@ -35,4 +36,6 @@ module "ecs" {
   ecr_repository_name    = var.ecr_repository_name
   vpc_id                 = var.vpc_id
   ecs_execution_role_arn = module.iam_ecs.ecr_execution_role_arn
+  s3_bucket_name         = var.s3_bucket_name
+
 }

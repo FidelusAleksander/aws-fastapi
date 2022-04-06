@@ -2,6 +2,7 @@ variable "project_name" {}
 variable "ecs_execution_role_arn" {}
 variable "ecr_repository_name" {}
 variable "vpc_id" {}
+variable "s3_bucket_name" {}
 
 variable "fargate_cpu" {
   type        = number
