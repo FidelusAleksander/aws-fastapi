@@ -17,6 +17,9 @@ resource "aws_ecs_task_definition" "task_definition" {
     {
       name  = "${var.project_name}-container"
       image = "${data.aws_ecr_repository.ecr.repository_url}:latest"
+      environment = [
+        { name = "S3_BUCKET_NAME", value = var.s3_bucket_name }
+      ],
   }])
 }
 
