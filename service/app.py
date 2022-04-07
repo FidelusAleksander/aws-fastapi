@@ -1,6 +1,7 @@
 import os
 
 from fastapi import FastAPI
+from fastapi.responses import RedirectResponse
 from service import Service
 
 app = FastAPI()
@@ -19,4 +20,6 @@ def list_objects():
 
 @app.get("/cv")
 def get_cv():
-    return service.generate_presigned_url("cv_Fidelus_Aleksander.pdf")
+    return RedirectResponse(
+        url=service.generate_presigned_url("cv_Fidelus_Aleksander.pdf")
+    )

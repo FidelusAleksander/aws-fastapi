@@ -2,6 +2,7 @@ variable "project_name" {}
 variable "ecs_execution_role_arn" {}
 variable "ecs_tasks_container_role" {}
 variable "ecr_repository_name" {}
+variable "image_tag" {}
 variable "vpc_id" {}
 variable "s3_bucket_name" {}
 

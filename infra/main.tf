@@ -38,5 +38,5 @@ module "ecs" {
   ecs_execution_role_arn   = module.iam_ecs.ecs_execution_role_arn
   ecs_tasks_container_role = module.iam_ecs.ecs_tasks_container_role
   s3_bucket_name           = var.s3_bucket_name
-
+  image_tag                = var.image_tag
 }

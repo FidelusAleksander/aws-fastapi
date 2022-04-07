@@ -22,7 +22,7 @@ resource "aws_ecs_task_definition" "task_definition" {
   container_definitions = jsonencode([
     {
       name  = "${var.project_name}-container"
-      image = "${data.aws_ecr_repository.ecr.repository_url}:latest"
+      image = "${data.aws_ecr_repository.ecr.repository_url}:${var.image_tag}"
       environment = [
         { name = "S3_BUCKET_NAME", value = var.s3_bucket_name }
       ],
