@@ -1,6 +1,7 @@
 import os
 
 from fastapi import FastAPI
+from fastapi.responses import RedirectResponse
 from service import Service
 
 app = FastAPI()
@@ -17,6 +18,8 @@ def list_objects():
     return service.list_objects()
 
 
-@app.get("/bucketName")
-def bucket_name():
-    return os.environ.get("S3_BUCKET_NAME")
+@app.get("/cv")
+def get_cv():
+    return RedirectResponse(
+        url=service.generate_presigned_url("cv_Fidelus_Aleksander.pdf")
+    )

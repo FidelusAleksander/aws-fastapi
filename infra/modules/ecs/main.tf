@@ -18,10 +18,11 @@ resource "aws_ecs_task_definition" "task_definition" {
   cpu                      = var.fargate_cpu
   memory                   = var.fargate_memory
   execution_role_arn       = var.ecs_execution_role_arn
+  task_role_arn            = var.ecs_tasks_container_role
   container_definitions = jsonencode([
     {
       name  = "${var.project_name}-container"
-      image = "${data.aws_ecr_repository.ecr.repository_url}:latest"
+      image = "${data.aws_ecr_repository.ecr.repository_url}:${var.image_tag}"
       environment = [
         { name = "S3_BUCKET_NAME", value = var.s3_bucket_name }
       ],
