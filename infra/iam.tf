@@ -1,6 +1,6 @@
 module "iam_ecs" {
-  source              = "./modules/iam/ecs"
-  project_name        = var.project_name
+  source       = "./modules/iam/ecs"
+  project_name = var.project_name
 }
 
 module "iam_s3_for_ecs" {
@@ -16,6 +16,6 @@ module "iam_ecr_for_ecs" {
 }
 
 module "iam_logs_for_ecs" {
-  source              = "./modules/iam/logs"
-  role_id             = module.iam_ecs.ecs_tasks_container_role_id
+  source  = "./modules/iam/logs"
+  role_id = module.iam_ecs.ecs_tasks_container_role_id
 }
