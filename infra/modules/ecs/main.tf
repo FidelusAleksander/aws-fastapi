@@ -13,7 +13,7 @@ data "aws_ecr_repository" "ecr" {
 
 resource "aws_ecs_task_definition" "task_definition" {
   family                   = var.project_name
-  requires_compatibilities = ["FARGATE"]
+  requires_compatibilities = ["FARGATE", "EC2"]
   network_mode             = "awsvpc"
   cpu                      = var.fargate_cpu
   memory                   = var.fargate_memory
@@ -58,6 +58,17 @@ resource "aws_ecs_service" "service" {
   }
 }
 
+resource "aws_ecs_service" "service_ec2" {
+  name            = "${var.project_name}-ecs-service-ec2"
+  cluster         = aws_ecs_cluster.cluster.id
+  task_definition = aws_ecs_task_definition.task_definition.arn
+  desired_count   = 1
+  launch_type     = "EC2"
+  network_configuration {
+    subnets         = data.aws_subnet_ids.subnet_ids.ids
+    security_groups = [aws_security_group.ecs_task_sg.id]
+  }
+}
 
 resource "aws_security_group" "ecs_task_sg" {
   name   = "${var.project_name}-ecs-task-sg"
