@@ -20,12 +20,7 @@ provider "aws" {
   region = "eu-west-1"
 }
 
-module "iam_ecs" {
-  source              = "./modules/iam/ecs"
-  project_name        = var.project_name
-  ecr_repository_name = var.ecr_repository_name
-  s3_bucket_name      = var.s3_bucket_name
-}
+
 #module "instance" {
 #  source = "./modules/instance"
 #}
