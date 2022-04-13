@@ -17,5 +17,5 @@ module "iam_ecr_for_ecs" {
 
 module "iam_logs_for_ecs" {
   source  = "./modules/iam/logs"
-  role_id = module.iam_ecs.ecs_tasks_container_role_id
+  role_id = module.iam_ecs.ecs_execution_role_id
 }
