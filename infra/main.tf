@@ -35,3 +35,8 @@ module "ecs" {
   s3_bucket_name           = var.s3_bucket_name
   image_tag                = var.image_tag
 }
+
+module "dynamo" {
+  source       = "./modules/dynamo"
+  project_name = var.project_name
+}
