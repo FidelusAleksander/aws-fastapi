@@ -2,6 +2,7 @@ data "aws_region" "current" {
 }
 locals {
   container_log_group_name = "${var.project_name}-container-logs"
+  unused_local             = "something"
 }
 resource "aws_ecs_cluster" "cluster" {
   name = "${var.project_name}-cluster"
@@ -29,7 +30,7 @@ resource "aws_ecs_task_definition" "task_definition" {
       logConfiguration = {
         logDriver = "awslogs"
         options = {
-          awslogs-group         = local.container_log_group_name
+          awslogs-group         = aws_cloudwatch_log_group.container_log_group.name
           awslogs-region        = data.aws_region.current.id
           awslogs-stream-prefix = var.project_name
         }
