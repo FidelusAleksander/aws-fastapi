@@ -5,6 +5,7 @@ variable "ecr_repository_name" {}
 variable "image_tag" {}
 variable "vpc_id" {}
 variable "s3_bucket_name" {}
+variable "unused_variable2" {}
 
 variable "fargate_cpu" {
   type        = number
