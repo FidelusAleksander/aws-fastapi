@@ -45,5 +45,8 @@ jobs:
       - name: Init TFLint
         run: tflint --init
 
+      - name: Init Terraform
+        run: terraform init -backend=false
+
       - name: Run TFLint
         run: tflint --module --enable-rule terraform_unused_declarations --enable-rule terraform_naming_convention -f compact
