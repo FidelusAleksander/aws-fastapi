@@ -30,6 +30,9 @@ jobs:
 
   tflint:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./infra
     steps:
       - uses: actions/checkout@v2
       - uses: actions/cache@v2
