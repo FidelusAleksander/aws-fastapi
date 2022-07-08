@@ -25,31 +25,6 @@ jobs:
       run: |
         pip install -r tests/requirements.txt
         pytest
-    - name: Terraform Format
-      run: terraform fmt -check -recursive -diff
-
-  tflint:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./infra
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/cache@v2
-        name: Cache plugin dir
-        with:
-          path: ~/.tflint.d/plugins
-          key: ${{ matrix.os }}-tflint-${{ hashFiles('.tflint.hcl') }}
-      - uses: terraform-linters/setup-tflint@v1
-
-      - name: Init TFLint
-        run: tflint --init
-
-      - name: Init Terraform
-        run: terraform init -backend=false
-
-      - name: Run TFLint
-        run: tflint --module --enable-rule terraform_unused_declarations --enable-rule terraform_naming_convention -f compact
 
   precommit:
     runs-on: ubuntu-latest
