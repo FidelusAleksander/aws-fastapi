@@ -50,3 +50,9 @@ jobs:
 
       - name: Run TFLint
         run: tflint --module --enable-rule terraform_unused_declarations --enable-rule terraform_naming_convention -f compact
+
+  precommit:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: pre-commit/action@v3.0.0
