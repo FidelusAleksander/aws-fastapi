@@ -25,5 +25,11 @@ jobs:
       run: |
         pip install -r tests/requirements.txt
         pytest
-    - name: Terraform Format
-      run: terraform fmt -check -recursive -diff
+
+  precommit:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: terraform-linters/setup-tflint@v1
+    - run: terraform init -backend=false
+    - uses: pre-commit/action@v3.0.0
