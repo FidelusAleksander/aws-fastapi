@@ -2,8 +2,8 @@ data "aws_region" "current" {
 }
 locals {
   container_log_group_name = "${var.project_name}-container-logs"
-  unused_local             = "something"
 }
+
 resource "aws_ecs_cluster" "cluster" {
   name = "${var.project_name}-cluster"
 }

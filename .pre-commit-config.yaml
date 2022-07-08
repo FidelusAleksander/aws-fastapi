@@ -17,3 +17,4 @@ repos:
           args:
               - --args=--enable-rule=terraform_unused_declarations
               - --args=--format=compact
+              - --args=--module
