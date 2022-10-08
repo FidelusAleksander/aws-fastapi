@@ -1,14 +1,5 @@
-data "aws_region" "current" {
-}
-locals {
-  container_log_group_name = "${var.project_name}-container-logs"
-}
 resource "aws_ecs_cluster" "cluster" {
   name = "${var.project_name}-cluster"
-}
-
-data "aws_ecr_repository" "ecr" {
-  name = var.ecr_repository_name
 }
 
 resource "aws_ecs_task_definition" "task_definition" {
@@ -22,7 +13,7 @@ resource "aws_ecs_task_definition" "task_definition" {
   container_definitions = jsonencode([
     {
       name  = "${var.project_name}-container"
-      image = "${data.aws_ecr_repository.ecr.repository_url}:${var.image_tag}"
+      image = "${data.aws_ecr_repository.ecr.repository_url}:${var.image_hash}"
       environment = [
         { name = "S3_BUCKET_NAME", value = var.s3_bucket_name }
       ],
@@ -35,14 +26,6 @@ resource "aws_ecs_task_definition" "task_definition" {
         }
       }
   }])
-}
-
-data "aws_vpc" "vpc" {
-  id = var.vpc_id
-}
-
-data "aws_subnet_ids" "subnet_ids" {
-  vpc_id = data.aws_vpc.vpc.id
 }
 
 resource "aws_ecs_service" "service" {

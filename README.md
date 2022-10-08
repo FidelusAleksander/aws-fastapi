@@ -1,2 +1,2 @@
-![Continuous Integration](https://github.com/FidelusAleksander/aws-fastapi/actions/workflows/integration.yaml/badge.svg)
-![Continuous Delivery](https://github.com/FidelusAleksander/aws-fastapi/actions/workflows/delivery.yaml/badge.svg)
+![Tests](https://github.com/FidelusAleksander/aws-fastapi/actions/workflows/tests.yaml/badge.svg)
+![Deploy](https://github.com/FidelusAleksander/aws-fastapi/actions/workflows/deploy.yaml/badge.svg)

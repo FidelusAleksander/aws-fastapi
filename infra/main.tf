@@ -1,30 +1,3 @@
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "3.26.0"
-    }
-  }
-  required_version = ">= 1.1.0"
-
-  cloud {
-    organization = "aws-fastapi"
-
-    workspaces {
-      name = "aws-fastapi"
-    }
-  }
-}
-
-provider "aws" {
-  region = "eu-west-1"
-}
-
-
-#module "instance" {
-#  source = "./modules/instance"
-#}
-
 module "ecs" {
   source                   = "./modules/ecs"
   project_name             = var.project_name
@@ -33,5 +6,5 @@ module "ecs" {
   ecs_execution_role_arn   = module.iam_ecs.ecs_execution_role_arn
   ecs_tasks_container_role = module.iam_ecs.ecs_tasks_container_role
   s3_bucket_name           = var.s3_bucket_name
-  image_tag                = var.image_tag
+  image_hash               = var.image_hash
 }
