@@ -10,7 +10,7 @@ service = Service.from_environ()
 
 @app.get("/")
 def hello():
-    return "hello world :)"
+    return "hello world :) (:"
 
 
 @app.get("/listObjects")
