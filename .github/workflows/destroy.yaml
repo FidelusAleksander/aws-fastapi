@@ -1,4 +1,4 @@
-name: destroy
+name: Destroy
 
 on:
   workflow_dispatch:
@@ -17,6 +17,8 @@ jobs:
         with:
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
       - name: Destroy
+        env:
+          TF_VAR_image_hash: ${{ hashFiles('service/**', 'Dockerfile') }}
         run: |
           terraform init
           terraform destroy -auto-approve
