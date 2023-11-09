@@ -7,6 +7,10 @@ on:
       IMAGE_HASH:
         value: ${{ jobs.build_push_image.outputs.IMAGE_HASH }}
 
+permissions:
+  contents: read
+  id-token: write
+
 jobs:
   build_push_image:
     name: Build Image
