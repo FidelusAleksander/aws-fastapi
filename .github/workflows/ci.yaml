@@ -1,0 +1,18 @@
+name: CI
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+
+jobs:
+  test:
+    name: Test
+    uses: ./.github/workflows/tests.yaml
+  build: # How can Spacelift wait for this to pass?
+    name: Build
+    uses: ./.github/workflows/build.yaml
+    secrets: inherit
+
+  #TODO: pass jobs.build.outputs.IMAGE_HASH to Spacelift ?
