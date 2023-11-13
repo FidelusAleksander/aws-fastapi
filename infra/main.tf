@@ -8,3 +8,8 @@ module "ecs" {
   s3_bucket_name           = var.s3_bucket_name
   image_hash               = var.image_hash
 }
+
+module "dynamo" {
+  source       = "./modules/dynamo"
+  project_name = var.project_name
+}
