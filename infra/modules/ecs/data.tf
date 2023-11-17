@@ -6,6 +6,10 @@ data "aws_vpc" "vpc" {
 
 data "aws_subnet_ids" "subnet_ids" {
   vpc_id = data.aws_vpc.vpc.id
+  filter {
+    name   = "tag:Name"
+    values = ["*private*"]
+  }
 }
 
 data "aws_ecr_repository" "ecr" {
