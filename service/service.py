@@ -12,7 +12,9 @@ class Service:
         return cls(s3_client=boto3.Session().client("s3"))
 
     def list_objects(self):
-        return self._s3_client.list_objects(Bucket=os.environ["S3_BUCKET_NAME"])
+        response = self._s3_client.list_objects(Bucket=os.environ["S3_BUCKET_NAME"])
+        object_keys = [item["Key"] for item in response.get("Contents", [])]
+        return object_keys
 
     def generate_presigned_url(self, key, expires_in: int = 300):
         return self._s3_client.generate_presigned_url(
