@@ -1,32 +1,18 @@
-name: Deploy
+name: CI
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - master
 
 jobs:
   test:
     name: Test
     uses: ./.github/workflows/tests.yaml
-  build:
+  build: # How can Spacelift wait for this to pass?
     name: Build
     uses: ./.github/workflows/build.yaml
     secrets: inherit
-  deploy:
-    name: Deploy
-    runs-on: ubuntu-latest
-    needs: [test, build]
-    defaults:
-      run:
-        working-directory: ./infra
-    steps:
-      - uses: actions/checkout@v4
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
-        with:
-          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
-      - name: Update infra
-        env:
-          TF_VAR_image_hash: ${{ needs.build.outputs.IMAGE_HASH }}
-        run: |
-          terraform init
-          terraform apply -auto-approve -input=false
+
+  #TODO: pass jobs.build.outputs.IMAGE_HASH to Spacelift ?
