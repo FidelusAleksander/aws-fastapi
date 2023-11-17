@@ -10,16 +10,14 @@ service = Service.from_environ()
 
 @app.get("/")
 def hello():
-    return "hello world :) (:"
+    return "hello world (:"
 
 
-@app.get("/listObjects")
+@app.get("/list_objects")
 def list_objects():
     return service.list_objects()
 
 
-@app.get("/cv")
-def get_cv():
-    return RedirectResponse(
-        url=service.generate_presigned_url("cv_Fidelus_Aleksander.pdf")
-    )
+@app.get("/sign_url")
+def sign_url(key: str):
+    return RedirectResponse(url=service.generate_presigned_url(key))
