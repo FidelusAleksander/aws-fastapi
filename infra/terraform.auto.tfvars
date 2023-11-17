@@ -1,3 +1,3 @@
 project_name        = "aws-fastapi"
 ecr_repository_name = "fidel-ecr"
-image_hash          = "02abfc5960d8449fbd2b411697dc2cf638796b24beb076fbd0ba1168758cbd18" # TODO: Remove hardcoded value
+image_hash          = "62f19ad0166aac2f21d12c4213cd2be209371005386730f18947d472d91e030f" # TODO: Remove hardcoded value
